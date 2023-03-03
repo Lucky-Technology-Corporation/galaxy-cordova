@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "savedToken",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.0.3",
+      sdkVersion: "1.0.7",
       requestGetParams: {
-        sdk: "JavaScriptSDK-1.0.3"
+        sdk: "JavaScriptSDK-1.0.7"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.0.3";
+  Galaxy.sdkVersion = "1.0.7";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -459,8 +459,7 @@ var inAppBrowserRef;
   function showWebview(url) {
     var target = '_blank';
 
-    var options = 'hideurlbar=no,hidenavigationbuttons=no,location=no,hidden=yes,beforeload=yes';
-
+    var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no';
     token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
     inAppBrowserRef = cordova.InAppBrowser.open(url + '?token=' + token, target, options);
 
@@ -470,58 +469,13 @@ var inAppBrowserRef;
 
     inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
 
-    inAppBrowserRef.addEventListener('beforeload', beforeloadCallBack);
-
     inAppBrowserRef.addEventListener('message', messageCallBack);
   }
 
-  function loadStartCallBack() {
-    // document.getElementById('status-message').innerText = 'loading please wait ...';
-  }
-
-  function loadStopCallBack() {
-    if (inAppBrowserRef != undefined) {
-
-      // inAppBrowserRef.insertCSS({ code: 'body{font-size: 25px;}' });
-
-      // inAppBrowserRef.executeScript({
-      //   code: "\
-      //       var message = 'this is the message';\
-      //       var messageObj = {my_message: message};\
-      //       var stringifiedMessageObj = JSON.stringify(messageObj);\
-      //       webkit.messageHandlers.cordova_iab.postMessage(stringifiedMessageObj);"
-      // });
-
-      // document.getElementById('status-message').innerText = '';
-
-      inAppBrowserRef.show();
-    }
-  }
-
-  function loadErrorCallBack(params) {
-
-    // document.getElementById('status-message').innerText = '';
-
-    var scriptErrorMesssage =
-      'alert(\'Sorry we cannot open that page. Message from the server is : ' + params.message + '\');'
-
-    inAppBrowserRef.executeScript({ code: scriptErrorMesssage }, executeScriptCallBack);
-
-    inAppBrowserRef.close();
-
-    inAppBrowserRef = undefined;
-
-  }
-
-  function executeScriptCallBack(params) {
-    if (params[0] == null) {
-      // document.getElementById('status-message').innerText = 'Sorry we couldn\'t open that page. Message from the server is : \'' + params.message + '\'';
-    }
-  }
-
-  function beforeloadCallBack(params, callback) {
+  function loadStartCallBack(params) {
     if (params.url.indexOf('close_window') != -1) {
       inAppBrowserRef.close();
+      return;
     }
 
     if (params.url.indexOf('save_token') != -1) {
@@ -607,6 +561,45 @@ var inAppBrowserRef;
     //   // The callback is not invoked, so the page will not be loaded.
     //   document.getElementById('status-message').innerText = 'This browser only opens pages on http://www.example.com/';
     // }
+  }
+
+  function loadStopCallBack() {
+    if (inAppBrowserRef != undefined) {
+
+      // inAppBrowserRef.insertCSS({ code: 'body{font-size: 25px;}' });
+
+      // inAppBrowserRef.executeScript({
+      //   code: "\
+      //       var message = 'this is the message';\
+      //       var messageObj = {my_message: message};\
+      //       var stringifiedMessageObj = JSON.stringify(messageObj);\
+      //       webkit.messageHandlers.cordova_iab.postMessage(stringifiedMessageObj);"
+      // });
+
+      // document.getElementById('status-message').innerText = '';
+
+      inAppBrowserRef.show();
+    }
+  }
+
+  function loadErrorCallBack(params) {
+    // document.getElementById('status-message').innerText = '';
+
+    var scriptErrorMesssage =
+      'alert(\'Sorry we cannot open that page. Message from the server is : ' + params.message + '\');'
+
+    inAppBrowserRef.executeScript({ code: scriptErrorMesssage }, executeScriptCallBack);
+
+    inAppBrowserRef.close();
+
+    inAppBrowserRef = undefined;
+
+  }
+
+  function executeScriptCallBack(params) {
+    if (params[0] == null) {
+      // document.getElementById('status-message').innerText = 'Sorry we couldn\'t open that page. Message from the server is : \'' + params.message + '\'';
+    }
   }
 
   function messageCallBack(params) {
