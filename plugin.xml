@@ -22,10 +22,5 @@
         </config-file>
     </platform>
     <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="GalaxyPlugin">
-                <param name="ios-package" value="GalaxyPlugin"/>
-            </feature>
-        </config-file>
     </platform>
 </plugin>

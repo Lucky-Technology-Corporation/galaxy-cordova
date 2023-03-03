@@ -364,7 +364,7 @@ var inAppBrowserRef;
    * onError: Error callback - called when error occurs during initialization.
    */
   Galaxy.prototype.InitSDK = function (args, onSuccess, onError) {
-    argscheck.checkArgs('O', 'Galaxy.InitSDK', arguments);
+    // argscheck.checkArgs('O', 'Galaxy.InitSDK', arguments);
 
     Galaxy._internalSettings.publishableKey = args.publishableKey;
 
@@ -383,7 +383,7 @@ var inAppBrowserRef;
           onError(GalaxyError.PUBLISHABLE_KEY_NOT_VALID);
         }
       } else {
-        exec(onSuccess, onError, 'GalaxyPlugin', 'InitSDK', [args]);
+        // exec(onSuccess, onError, 'GalaxyPlugin', 'InitSDK', [args]);
 
         callbackMap.convSuc = onSuccess;
         callbackMap.convErr = onError;

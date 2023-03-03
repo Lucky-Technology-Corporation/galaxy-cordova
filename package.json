@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-galaxy",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Cordova Galaxy Plugin",
   "cordova": {
     "id": "cordova-plugin-galaxy",
