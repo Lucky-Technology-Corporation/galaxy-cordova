@@ -45,8 +45,7 @@ document.addEventListener('deviceready', function() {
     (e) => window.galaxy.ClientAPI.ReportScore({
       leaderboard_id: 'Your Leaderboard Id',
       score: 1,
-    },
-    (result, error) => {
+    }, (result, error) => {
       console.log(result);
     }),
   );
