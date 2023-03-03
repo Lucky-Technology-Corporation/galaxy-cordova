@@ -8,8 +8,7 @@ var inAppBrowserRef;
 (function (global) {
   cordova.plugin.http.setDataSerializer('json');
 
-  var Galaxy = function () {
-  };
+  var Galaxy = function () { };
 
   if (!Galaxy.settings) {
     Galaxy.settings = {
@@ -23,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "savedToken",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "0.0.1",
+      sdkVersion: "1.0.1",
       requestGetParams: {
-        sdk: "JavaScriptSDK-0.0.1"
+        sdk: "JavaScriptSDK-1.0.1"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -257,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "0.0.1";
+  Galaxy.sdkVersion = "1.0.1";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -355,6 +354,9 @@ var inAppBrowserRef;
     },
 
   };
+
+
+
 
   /**
    * initialize the SDK.
@@ -475,23 +477,23 @@ var inAppBrowserRef;
   }
 
   function loadStartCallBack() {
-    document.getElementById('status-message').innerText = 'loading please wait ...';
+    // document.getElementById('status-message').innerText = 'loading please wait ...';
   }
 
   function loadStopCallBack() {
     if (inAppBrowserRef != undefined) {
 
-      inAppBrowserRef.insertCSS({ code: 'body{font-size: 25px;}' });
+      // inAppBrowserRef.insertCSS({ code: 'body{font-size: 25px;}' });
 
-      inAppBrowserRef.executeScript({
-        code: "\
-            var message = 'this is the message';\
-            var messageObj = {my_message: message};\
-            var stringifiedMessageObj = JSON.stringify(messageObj);\
-            webkit.messageHandlers.cordova_iab.postMessage(stringifiedMessageObj);"
-      });
+      // inAppBrowserRef.executeScript({
+      //   code: "\
+      //       var message = 'this is the message';\
+      //       var messageObj = {my_message: message};\
+      //       var stringifiedMessageObj = JSON.stringify(messageObj);\
+      //       webkit.messageHandlers.cordova_iab.postMessage(stringifiedMessageObj);"
+      // });
 
-      document.getElementById('status-message').innerText = '';
+      // document.getElementById('status-message').innerText = '';
 
       inAppBrowserRef.show();
     }
@@ -499,7 +501,7 @@ var inAppBrowserRef;
 
   function loadErrorCallBack(params) {
 
-    document.getElementById('status-message').innerText = '';
+    // document.getElementById('status-message').innerText = '';
 
     var scriptErrorMesssage =
       'alert(\'Sorry we cannot open that page. Message from the server is : ' + params.message + '\');'
@@ -514,8 +516,7 @@ var inAppBrowserRef;
 
   function executeScriptCallBack(params) {
     if (params[0] == null) {
-
-      document.getElementById('status-message').innerText = 'Sorry we couldn\'t open that page. Message from the server is : \'' + params.message + '\'';
+      // document.getElementById('status-message').innerText = 'Sorry we couldn\'t open that page. Message from the server is : \'' + params.message + '\'';
     }
   }
 
@@ -631,55 +632,4 @@ var inAppBrowserRef;
     return {};
   }
 
-  function getAuthorization() {
-    try {
-      if (!token) {
-        return {};
-      }
-
-      var userInfo = getUserInfo();
-      if (!userInfo.anonymous) {
-        return { 'Super-Authorization': token };
-      }
-
-      return { 'Anonymous-Authorization': token };
-    } catch (_) {
-      return { 'Anonymous-Authorization': token };
-    }
-  }
-
-  function fetchGet(path, onSuccess, onError) {
-    cordova.plugin.http.sendRequest(apiURL + path, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Publishable-Key': publishableKey,
-        ...getAuthorization(),
-      },
-    }, onSuccess, onError);
-  }
-
-  function fetchPost(path, data, onSuccess, onError) {
-    cordova.plugin.http.sendRequest(apiURL + path, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Publishable-Key': publishableKey,
-        ...getAuthorization(),
-      },
-      data: data,
-    }, onSuccess, onError);
-  }
-
-  function fetchPatch(path, data, onSuccess, onError) {
-    cordova.plugin.http.sendRequest(apiURL + path, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Publishable-Key': publishableKey,
-        ...getAuthorization(),
-      },
-      data: data,
-    }, onSuccess, onError);
-  }
 })(window);
