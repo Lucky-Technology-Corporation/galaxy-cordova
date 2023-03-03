@@ -19,12 +19,12 @@ var inAppBrowserRef;
   if (!Galaxy._internalSettings) {
     Galaxy._internalSettings = {
       publishableKey: null,
-      tokenStorageKey: "savedToken",
+      tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.0.7",
+      sdkVersion: "1.0.8",
       requestGetParams: {
-        sdk: "JavaScriptSDK-1.0.7"
+        sdk: "JavaScriptSDK-1.0.8"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.0.7";
+  Galaxy.sdkVersion = "1.0.8";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
