@@ -36,17 +36,8 @@ document.addEventListener('deviceready', function() {
     console.error(error);
   });
 
-  // ShowLeaderboard
-  document.getElementById('button').addEventListener(
-    'click',
-    (e) => window.galaxy.ShowLeaderboard({
-      leaderboard_id: 'Your Leaderboard Id',
-    }, (result) => {
-      console.log(result);
-    }, (error) => {
-      console.error(error);
-    }),
-  );
+
+  /* Client API */
 
   // ReportScore
   document.getElementById('button').addEventListener(
@@ -57,6 +48,21 @@ document.addEventListener('deviceready', function() {
     },
     (result, error) => {
       console.log(result);
+    }),
+  );
+
+
+  /* Galaxy UI */
+
+  // ShowLeaderboard
+  document.getElementById('button').addEventListener(
+    'click',
+    (e) => window.galaxy.ShowLeaderboard({
+      leaderboard_id: 'Your Leaderboard Id',
+    }, (result) => {
+      console.log(result);
+    }, (error) => {
+      console.error(error);
     }),
   );
 
