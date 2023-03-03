@@ -396,7 +396,7 @@ var inAppBrowserRef;
    * onError: Error callback - called when error occurs.
    */
   Galaxy.prototype.ShowAvatarEditor = function (onSuccess, onError) {
-    argscheck.checkArgs('FF', 'Galaxy.ShowAvatarEditor', arguments);
+    // argscheck.checkArgs('FF', 'Galaxy.ShowAvatarEditor', arguments);
 
     callbackMap.attrSuc = onSuccess;
     callbackMap.attrErr = onError;
@@ -404,7 +404,7 @@ var inAppBrowserRef;
     var userInfo = getUserInfo();
     showWebview(Galaxy._internalSettings.productionAppUrl + '/players/' + userInfo.user_id + '/edit');
 
-    exec(onSuccess, onError, 'GalaxyPlugin', 'ShowAvatarEditor', []);
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowAvatarEditor', []);
   };
 
   /**
@@ -412,14 +412,14 @@ var inAppBrowserRef;
    * onError: Error callback - called when error occurs.
    */
   Galaxy.prototype.ShowClan = function ({ leaderboard_id, clan_id }, onSuccess, onError) {
-    argscheck.checkArgs('OFF', 'Galaxy.ShowClan', arguments);
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowClan', arguments);
 
     callbackMap.attrSuc = onSuccess;
     callbackMap.attrErr = onError;
 
     showWebview(Galaxy._internalSettings.productionAppUrl + '/leaderboards/' + leaderboard_id + '/clans/' + clan_id);
 
-    exec(onSuccess, onError, 'GalaxyPlugin', 'ShowClan', []);
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowClan', []);
   };
 
   /**
@@ -427,14 +427,14 @@ var inAppBrowserRef;
    * onError: Error callback - called when error occurs.
    */
   Galaxy.prototype.ShowLeaderboard = function ({ leaderboard_id }, onSuccess, onError) {
-    argscheck.checkArgs('OFF', 'Galaxy.ShowLeaderboard', arguments);
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowLeaderboard', arguments);
 
     callbackMap.attrSuc = onSuccess;
     callbackMap.attrErr = onError;
 
     showWebview(Galaxy._internalSettings.productionAppUrl + '/leaderboards/' + leaderboard_id);
 
-    exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
   };
 
   module.exports = new Galaxy();
