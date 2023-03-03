@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "savedToken",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.0.2",
+      sdkVersion: "1.0.3",
       requestGetParams: {
-        sdk: "JavaScriptSDK-1.0.2"
+        sdk: "JavaScriptSDK-1.0.3"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.0.2";
+  Galaxy.sdkVersion = "1.0.3";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -357,7 +357,6 @@ var inAppBrowserRef;
 
 
 
-
   /**
    * initialize the SDK.
    * args: SDK configuration
@@ -428,7 +427,7 @@ var inAppBrowserRef;
    * onError: Error callback - called when error occurs.
    */
   Galaxy.prototype.ShowLeaderboard = function ({ leaderboard_id }, onSuccess, onError) {
-    argscheck.checkArgs('SFF', 'Galaxy.ShowLeaderboard', arguments);
+    argscheck.checkArgs('OFF', 'Galaxy.ShowLeaderboard', arguments);
 
     callbackMap.attrSuc = onSuccess;
     callbackMap.attrErr = onError;
