@@ -37,39 +37,51 @@ document.addEventListener('deviceready', function() {
   });
 
   // ShowLeaderboard
-  document.getElementById('button').addEventListener('click', (e) => window.galaxy.ShowLeaderboard({
-    leaderboard_id: 'Your Leaderboard Id',
-  }, (result) => {
-    console.log(result);
-  }, (error) => {
-    console.error(error);
-  }));
+  document.getElementById('button').addEventListener(
+    'click',
+    (e) => window.galaxy.ShowLeaderboard({
+      leaderboard_id: 'Your Leaderboard Id',
+    }, (result) => {
+      console.log(result);
+    }, (error) => {
+      console.error(error);
+    }),
+  );
 
   // ReportScore
-  document.getElementById('button').addEventListener('click', (e) => window.galaxy.ClientAPI.ReportScore({
-    leaderboard_id: 'Your Leaderboard Id',
-    score: 1,
-  },
-  (result, error) => {
-    console.log(result);
-  }));
+  document.getElementById('button').addEventListener(
+    'click',
+    (e) => window.galaxy.ClientAPI.ReportScore({
+      leaderboard_id: 'Your Leaderboard Id',
+      score: 1,
+    },
+    (result, error) => {
+      console.log(result);
+    }),
+  );
 
   // ShowAvatarEditor
-  document.getElementById('button').addEventListener('click', (e) => window.galaxy.ShowAvatarEditor((result) => {
-    console.log(result);
-  }, (error) => {
-    console.error(error);
-  }));
+  document.getElementById('button').addEventListener(
+    'click',
+    (e) => window.galaxy.ShowAvatarEditor((result) => {
+      console.log(result);
+    }, (error) => {
+      console.error(error);
+    }),
+  );
 
   // ShowClan
-  document.getElementById('button').addEventListener('click', (e) => window.galaxy.ShowClan({
-    leaderboard_id: 'Your Leaderboard Id',
-    clan_id: 'clan id'
-  }, (result) => {
-    console.log(result);
-  }, (error) => {
-    console.error(error);
-  }));
+  document.getElementById('button').addEventListener(
+    'click',
+    (e) => window.galaxy.ShowClan({
+      leaderboard_id: 'Your Leaderboard Id',
+      clan_id: 'clan id'
+    }, (result) => {
+      console.log(result);
+    }, (error) => {
+      console.error(error);
+    }),
+  );
 
  }, false);
 ```
