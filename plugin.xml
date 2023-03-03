@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="cordova-plugin-galaxy" version="0.0.1">
+    <name>Galaxy</name>
+    <description>Cordova Galaxy Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,galaxy</keywords>
+    <js-module src="www/galaxy.js" name="galaxy">
+        <clobbers target="galaxy" />
+    </js-module>
+    <dependency id="cordova-plugin-inappbrowser" version="5.0.0" />
+    <dependency id="cordova-plugin-advanced-http" version="3.3.1" />
+    <platform name="android">
+        <!-- android-specific elements -->
+    </platform>
+    <platform name="ios">
+        <!-- ios-specific elements -->
+    </platform>
+</plugin>
