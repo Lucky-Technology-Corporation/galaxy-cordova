@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.0.8",
+      sdkVersion: "1.0.9",
       requestGetParams: {
-        sdk: "JavaScriptSDK-1.0.8"
+        sdk: "JavaScriptSDK-1.0.9"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -310,18 +310,34 @@ var inAppBrowserRef;
     },
 
     GetPlayerFriends: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/friends", request, null, "GET", callback, customData, extraHeaders);
     },
 
     GetPlayerProfile: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/profile", request, null, "GET", callback, customData, extraHeaders);
     },
 
     GetPlayerNotifications: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/notifications", request, null, "GET", callback, customData, extraHeaders);
     },
 
     GetPlayerRecord: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id + "/players/" + request.player_id, request, null, "GET", callback, customData, extraHeaders);
     },
 
@@ -349,7 +365,29 @@ var inAppBrowserRef;
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/save_state", request, null, "GET", callback, customData, extraHeaders);
     },
 
+    ProcessDeepLink: function (request, callback, customData, extraHeaders) {
+      if(!request.link.includes("https://api.galaxysdk.com/")){ return; }
+      return Galaxy._internalSettings.ExecuteRequestWrapper(request.link.replace("https://api.galaxysdk.com/api/v1", ""), request, null, "POST", callback, customData, extraHeaders);
+    },
+
+    SignIn: function (request, callback, customData, extraHeaders) {
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/signup/custom_string", request, null, "POST", function (error, response) {
+        Galaxy.token = response.data.token
+        if (Galaxy.token) {
+          global.localStorage.setItem(Galaxy._internalSettings.tokenStorageKey, Galaxy.token);
+        }
+        
+        if (typeof callback === 'function') {
+          callback(error, response);
+        }
+      }, customData, extraHeaders);
+    },
+
     UpdatePlayerProfile: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/profile", request, null, "GET", callback, customData, extraHeaders);
     },
 
@@ -433,6 +471,33 @@ var inAppBrowserRef;
     callbackMap.attrErr = onError;
 
     showWebview(Galaxy._internalSettings.productionAppUrl + '/leaderboards/' + leaderboard_id);
+
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
+  };
+
+  Galaxy.prototype.ShowChannel = function ({ channel_id }) {
+    showWebview(Galaxy._internalSettings.productionAppUrl + '/channels/' + channel_id);
+  };
+
+  Galaxy.prototype.ShowProfile = function ({ player_id }) {
+    if(player_id == undefined){
+      var userInfo = getUserInfo();
+      player_id = userInfo.user_id;
+    }
+
+    callbackMap.attrSuc = onSuccess;
+    callbackMap.attrErr = onError;
+
+    showWebview(Galaxy._internalSettings.productionAppUrl + '/players/' + player_id);
+  };
+
+  Galaxy.prototype.SignIn = function (onSuccess, onError) {
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowLeaderboard', arguments);
+
+    callbackMap.attrSuc = onSuccess;
+    callbackMap.attrErr = onError;
+
+    showWebview(Galaxy._internalSettings.productionAppUrl + '/sign_in');
 
     // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
   };
