@@ -366,7 +366,7 @@ var inAppBrowserRef;
     },
 
     ProcessDeepLink: function (request, callback, customData, extraHeaders) {
-      if(!request.link.includes("https://api.galaxysdk.com/")){ return; }
+      if (!request.link.includes("https://api.galaxysdk.com/")) { return; }
       return Galaxy._internalSettings.ExecuteRequestWrapper(request.link.replace("https://api.galaxysdk.com/api/v1", ""), request, null, "POST", callback, customData, extraHeaders);
     },
 
@@ -376,7 +376,7 @@ var inAppBrowserRef;
         if (Galaxy.token) {
           global.localStorage.setItem(Galaxy._internalSettings.tokenStorageKey, Galaxy.token);
         }
-        
+
         if (typeof callback === 'function') {
           callback(error, response);
         }
@@ -404,13 +404,6 @@ var inAppBrowserRef;
   Galaxy.prototype.InitSDK = function (args, onSuccess, onError) {
     // argscheck.checkArgs('O', 'Galaxy.InitSDK', arguments);
 
-    Galaxy._internalSettings.publishableKey = args.publishableKey;
-
-    token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
-    if (!token) {
-      signInAnonymously();
-    }
-
     if (!args) {
       if (onError) {
         onError(GalaxyError.INVALID_ARGUMENT_ERROR);
@@ -421,10 +414,17 @@ var inAppBrowserRef;
           onError(GalaxyError.PUBLISHABLE_KEY_NOT_VALID);
         }
       } else {
-        // exec(onSuccess, onError, 'GalaxyPlugin', 'InitSDK', [args]);
+        Galaxy._internalSettings.publishableKey = args.publishableKey;
+
+        token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
+        if (!token) {
+          signInAnonymously();
+        }
 
         callbackMap.convSuc = onSuccess;
         callbackMap.convErr = onError;
+
+        // exec(onSuccess, onError, 'GalaxyPlugin', 'InitSDK', [args]);
       }
     }
   };
@@ -475,12 +475,21 @@ var inAppBrowserRef;
     // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
   };
 
-  Galaxy.prototype.ShowChannel = function ({ channel_id }) {
+  Galaxy.prototype.ShowChannel = function ({ channel_id }, onSuccess, onError) {
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowChannel', arguments);
+
+    callbackMap.attrSuc = onSuccess;
+    callbackMap.attrErr = onError;
+
     showWebview(Galaxy._internalSettings.productionAppUrl + '/channels/' + channel_id);
+
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowChannel', []);
   };
 
-  Galaxy.prototype.ShowProfile = function ({ player_id }) {
-    if(player_id == undefined){
+  Galaxy.prototype.ShowProfile = function ({ player_id }, onSuccess, onError) {
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowProfile', arguments);
+    if (player_id == undefined) {
+
       var userInfo = getUserInfo();
       player_id = userInfo.user_id;
     }
@@ -489,17 +498,19 @@ var inAppBrowserRef;
     callbackMap.attrErr = onError;
 
     showWebview(Galaxy._internalSettings.productionAppUrl + '/players/' + player_id);
+
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowProfile', []);
   };
 
   Galaxy.prototype.SignIn = function (onSuccess, onError) {
-    // argscheck.checkArgs('OFF', 'Galaxy.ShowLeaderboard', arguments);
+    // argscheck.checkArgs('FF', 'Galaxy.SignIn', arguments);
 
     callbackMap.attrSuc = onSuccess;
     callbackMap.attrErr = onError;
 
     showWebview(Galaxy._internalSettings.productionAppUrl + '/sign_in');
 
-    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowLeaderboard', []);
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'SignIn', []);
   };
 
   module.exports = new Galaxy();
