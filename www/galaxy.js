@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.0.9",
+      sdkVersion: "1.1.0",
       requestGetParams: {
-        sdk: "JavaScriptSDK-1.0.9"
+        sdk: "CordovaSDK-1.1.0"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -110,7 +110,7 @@ var inAppBrowserRef;
 
           xhr.setRequestHeader("Content-Type", "application/json");
           xhr.setRequestHeader("Publishable-Key", Galaxy._internalSettings.publishableKey);
-          xhr.setRequestHeader("X-GalaxySDK", "JavaScriptSDK-" + Galaxy._internalSettings.sdkVersion);
+          xhr.setRequestHeader("X-GalaxySDK", "CordovaSDK-" + Galaxy._internalSettings.sdkVersion);
           if (authkey != null)
             xhr.setRequestHeader(authkey, authValue);
           var auth = Galaxy._internalSettings.GetAuthorization();
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.0.8";
+  Galaxy.sdkVersion = "1.1.0";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -362,7 +362,7 @@ var inAppBrowserRef;
     },
 
     SaveState: function (request, callback, customData, extraHeaders) {
-      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/save_state", request, null, "GET", callback, customData, extraHeaders);
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/save_state", request, null, "POST", callback, customData, extraHeaders);
     },
 
     ProcessDeepLink: function (request, callback, customData, extraHeaders) {
@@ -388,7 +388,7 @@ var inAppBrowserRef;
         var userInfo = getUserInfo();
         request.player_id = userInfo.user_id;
       }
-      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/profile", request, null, "GET", callback, customData, extraHeaders);
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/profile", request, null, "PATCH", callback, customData, extraHeaders);
     },
 
   };
