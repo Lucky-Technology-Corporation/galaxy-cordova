@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.1.0",
+      sdkVersion: "1.1.2",
       requestGetParams: {
-        sdk: "CordovaSDK-1.1.0"
+        sdk: "CordovaSDK-1.1.2"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.1.0";
+  Galaxy.sdkVersion = "1.1.2";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
