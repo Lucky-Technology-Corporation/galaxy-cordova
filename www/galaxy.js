@@ -537,7 +537,7 @@ var inAppBrowserRef;
 
     var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no';
     token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
-    inAppBrowserRef = cordova.InAppBrowser.open(url + '?token=' + token, target, options);
+    inAppBrowserRef = cordova.InAppBrowser.open(url + '?token=' + token + "&combo=true", target, options);
 
     inAppBrowserRef.addEventListener('loadstart', loadStartCallBack);
 
