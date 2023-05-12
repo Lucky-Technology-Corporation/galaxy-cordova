@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.1.2",
+      sdkVersion: "1.1.3",
       requestGetParams: {
-        sdk: "CordovaSDK-1.1.2"
+        sdk: "CordovaSDK-1.1.3"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.1.2";
+  Galaxy.sdkVersion = "1.1.3";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -294,7 +294,14 @@ var inAppBrowserRef;
     },
 
     FindOpponent: function (request, callback, customData, extraHeaders) {
-      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id + "/find_opponent", request, null, "GET", callback, customData, extraHeaders);
+      var queryString = "?first_bound=" + (request.first_bound ?? -500) + "&second_bound=" + (request.second_bound ?? 500);
+      if(request.online_only != null){
+        queryString += "&online_only=" + request.online_only;
+      }
+      if(request.friends_only != null){
+        queryString += "&friends_only=" + request.friends_only;
+      }
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id + "/find_opponent" + queryString, request, null, "GET", callback, customData, extraHeaders);
     },
 
     GetClan: function (request, callback, customData, extraHeaders) {
