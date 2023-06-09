@@ -534,6 +534,18 @@ var inAppBrowserRef;
     // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowChannel', []);
   };
 
+  Galaxy.prototype.ShowAchievements = function ({ channel_id }, onSuccess, onError) {
+    // argscheck.checkArgs('OFF', 'Galaxy.ShowChannel', arguments);
+
+    callbackMap.attrSuc = onSuccess;
+    callbackMap.attrErr = onError;
+
+    showWebview(Galaxy._internalSettings.productionAppUrl + '/achievements/');
+
+    // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowChannel', []);
+  };
+
+
   Galaxy.prototype.ShowProfile = function ({ player_id }, onSuccess, onError) {
     // argscheck.checkArgs('OFF', 'Galaxy.ShowProfile', arguments);
     if (player_id == undefined) {
