@@ -534,7 +534,7 @@ var inAppBrowserRef;
     // exec(onSuccess, onError, 'GalaxyPlugin', 'ShowChannel', []);
   };
 
-  Galaxy.prototype.ShowAchievements = function ({ channel_id }, onSuccess, onError) {
+  Galaxy.prototype.ShowAchievements = function (onSuccess, onError) {
     // argscheck.checkArgs('OFF', 'Galaxy.ShowChannel', arguments);
 
     callbackMap.attrSuc = onSuccess;
