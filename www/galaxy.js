@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.1.3",
+      sdkVersion: "1.1.4",
       requestGetParams: {
-        sdk: "CordovaSDK-1.1.3"
+        sdk: "CordovaSDK-1.1.4"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -348,6 +348,18 @@ var inAppBrowserRef;
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id + "/players/" + request.player_id, request, null, "GET", callback, customData, extraHeaders);
     },
 
+    GetPrizes: function (request, callback, customData, extraHeaders) {
+      var userInfo = getUserInfo();
+      var player_id = userInfo.user_id;
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + player_id + "/prizes", request, null, "GET", callback, customData, extraHeaders);
+    },
+
+    AwardPrize: function (request, callback, customData, extraHeaders) {
+      var userInfo = getUserInfo();
+      var player_id = userInfo.user_id;
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + player_id + "/prizes/" + request.id + "/award", request, null, "POST", callback, customData, extraHeaders);
+    },
+
     GetState: function (request, callback, customData, extraHeaders) {
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/get_state", request, null, "GET", callback, customData, extraHeaders);
     },
@@ -377,6 +389,21 @@ var inAppBrowserRef;
       return Galaxy._internalSettings.ExecuteRequestWrapper(request.link.replace("https://api.galaxysdk.com/api/v1", ""), request, null, "POST", callback, customData, extraHeaders);
     },
 
+    AwardAchievement: function (request, callback, customData, extraHeaders) {
+      var userInfo = getUserInfo();
+      var player_id = userInfo.user_id;
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + player_id + "/achievements", request, null, "POST", callback, customData, extraHeaders);
+    },
+
+    GetAchievements: function (request, callback, customData, extraHeaders) {
+      if (!request.player_id) {
+        var userInfo = getUserInfo();
+        request.player_id = userInfo.user_id;
+      }
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/achievements", request, null, "GET", callback, customData, extraHeaders);
+    },
+    
+
     SignIn: function (request, callback, customData, extraHeaders) {
       return Galaxy._internalSettings.ExecuteRequestWrapper("/signup/custom_string", request, null, "POST", function (error, response) {
         Galaxy.token = response.data.token
@@ -389,6 +416,20 @@ var inAppBrowserRef;
         }
       }, customData, extraHeaders);
     },
+
+    SignInWithPlayfab: function (request, callback, customData, extraHeaders) {
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/signup/playfab", request, null, "POST", function (error, response) {
+        Galaxy.token = response.data.token
+        if (Galaxy.token) {
+          global.localStorage.setItem(Galaxy._internalSettings.tokenStorageKey, Galaxy.token);
+        }
+
+        if (typeof callback === 'function') {
+          callback(error, response);
+        }
+      }, customData, extraHeaders);
+    },
+
 
     UpdatePlayerProfile: function (request, callback, customData, extraHeaders) {
       if (!request.player_id) {
