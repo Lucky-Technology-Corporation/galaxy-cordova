@@ -599,7 +599,7 @@ var inAppBrowserRef;
   function showWebview(url) {
     var target = '_blank';
 
-    var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no,fullscreen=yes';
+    var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no,fullscreen=yes,allowInlineMediaPlayback=yes,enableViewportScale=yes,presentationstyle=fullscreen,toolbarposition=top,zoom=no,hideurlbar=yes,footer=no';
     token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
     inAppBrowserRef = cordova.InAppBrowser.open(url + '?token=' + token + "&combo=true", target, options);
 
@@ -704,21 +704,33 @@ var inAppBrowserRef;
   }
 
   function GetContacts(){
-    var options = new ContactFindOptions();
-    options.multiple = true;   
-    options.hasPhoneNumber = true; 
-    var fields = ["displayName", "name", "phoneNumbers"]; 
-    navigator.contacts.find(fields, onContactSuccess, onContactError, options);
+    window.ContactsX.requestPermission(function(success) {
+      
+      window.ContactsX.find(function(success) {
+        onContactSuccess(success)
+      }, function (error) {
+        console.error(error);
+      }, {
+        fields: {
+          phoneNumbers: true,
+          firstName: true,
+          familyName: true,
+        }
+      });   
+
+    }, function (error) {
+      console.error(error);
+    });
   }
   function onContactSuccess(contacts) {
     var contactArray = []
     for (var i = 0; i < contacts.length; i++) {
-      contactArray.push({"name": contacts[i].displayName, "phone_number": contacts[i].phoneNumbers[0].value})
+      contactArray.push({"name": contacts[i].firstName + " " + contacts[i].familyName, "phone_number": contacts[i].phoneNumbers[0].value})
     }
     UpdateContacts({"contacts": contactArray})
   }
   function onContactError(contactError) {
-    alert("Couldn't get contacts: " + contactError.code);
+    console.error("Couldn't get contacts: " + contactError.code);
   }
   
   

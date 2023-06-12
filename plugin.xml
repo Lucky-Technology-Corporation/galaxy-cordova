@@ -10,7 +10,7 @@
     </js-module>
     <dependency id="cordova-plugin-inappbrowser" version="5.0.0" />
     <dependency id="cordova-plugin-advanced-http" version="3.3.1" />
-    <dependency id="cordova-plugin-contacts" version="3.0.1" />
+    <dependency id="cordova-plugin-contacts-x" version="2.1.2" />
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="GalaxyPlugin">
@@ -20,12 +20,13 @@
         <config-file target="AndroidManifest.xml" parent="/manifest" mode="merge">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.READ_CONTACTS" />
         </config-file>
     </platform>
     <platform name="ios">
-            <preference name="CONTACTS_USAGE_DESCRIPTION" default="Allow access to your contacts to find friends"/>
-            <config-file target="*-Info.plist" parent="NSContactsUsageDescription">
-                <string>$CONTACTS_USAGE_DESCRIPTION</string>
-            </config-file>            
+        <preference name="CONTACTS_USAGE_DESCRIPTION" default="Allow access to your contacts to find friends"/>
+        <config-file target="*-Info.plist" parent="NSContactsUsageDescription">
+            <string>$CONTACTS_USAGE_DESCRIPTION</string>
+        </config-file>            
     </platform>
 </plugin>
