@@ -438,6 +438,10 @@ var inAppBrowserRef;
       }
       return Galaxy._internalSettings.ExecuteRequestWrapper("/client/players/" + request.player_id + "/profile", request, null, "PATCH", callback, customData, extraHeaders);
     },
+    
+    UpdateContacts: function (request, callback, customData, extraHeaders) {
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/users/update_contacts", request, null, "POST", callback, customData, extraHeaders);
+    }
 
   };
 
@@ -621,7 +625,7 @@ var inAppBrowserRef;
 
     if (params.url.indexOf('sdk_action') != -1) {
       if (params.url.indexOf('request_contacts') != -1) {
-        // GetContacts();
+        GetContacts();
       }
 
       if (params.url.indexOf('request_contacts') != -1) {
@@ -698,6 +702,26 @@ var inAppBrowserRef;
     //   document.getElementById('status-message').innerText = 'This browser only opens pages on http://www.example.com/';
     // }
   }
+
+  function GetContacts(){
+    var options = new ContactFindOptions();
+    options.multiple = true;   
+    options.hasPhoneNumber = true; 
+    var fields = ["displayName", "name", "phoneNumbers"]; 
+    navigator.contacts.find(fields, onContactSuccess, onContactError, options);
+  }
+  function onContactSuccess(contacts) {
+    var contactArray = []
+    for (var i = 0; i < contacts.length; i++) {
+      contactArray.push({"name": contacts[i].displayName, "phone_number": contacts[i].phoneNumbers[0].value})
+    }
+    UpdateContacts({"contacts": contactArray})
+  }
+  function onContactError(contactError) {
+    alert("Couldn't get contacts: " + contactError.code);
+  }
+  
+  
 
   function loadStopCallBack() {
     if (inAppBrowserRef != undefined) {
