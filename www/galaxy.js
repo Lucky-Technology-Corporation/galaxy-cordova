@@ -595,7 +595,7 @@ var inAppBrowserRef;
   function showWebview(url) {
     var target = '_blank';
 
-    var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no';
+    var options = 'location=no,hidden=yes,hidenavigationbuttons=yes,toolbar=no,fullscreen=yes';
     token = global.localStorage.getItem(Galaxy._internalSettings.tokenStorageKey);
     inAppBrowserRef = cordova.InAppBrowser.open(url + '?token=' + token + "&combo=true", target, options);
 
