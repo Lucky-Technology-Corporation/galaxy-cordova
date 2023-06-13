@@ -22,9 +22,9 @@ var inAppBrowserRef;
       tokenStorageKey: "token",
       productionAppUrl: "https://app.galaxy.us",
       productionServerUrl: "https://api.galaxysdk.com/api/v1",
-      sdkVersion: "1.1.4",
+      sdkVersion: "1.2.3",
       requestGetParams: {
-        sdk: "CordovaSDK-1.1.4"
+        sdk: "CordovaSDK-1.2.3"
       },
       sessionTicket: null,
       verticalName: null, // The name of a customer vertical. This is only for customers running a private cluster. Generally you shouldn't touch this
@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.2.2";
+  Galaxy.sdkVersion = "1.2.3";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -729,7 +729,9 @@ var inAppBrowserRef;
   function onContactSuccess(contacts) {
     var contactArray = []
     for (var i = 0; i < contacts.length; i++) {
-      contactArray.push({"name": contacts[i].firstName + " " + contacts[i].familyName, "phone_number": contacts[i].phoneNumbers[0].value})
+      var name = (contacts[i].firstName ?? '') + ' ' + (contacts[i].familyName ?? '');
+      var phoneNumber = contacts[i].phoneNumbers && contacts[i].phoneNumbers[0] ? contacts[i].phoneNumbers[0].value : '';
+      contactArray.push({"name": name, "phone_number": phoneNumber})
     }
     Galaxy.prototype.ClientAPI.UpdateContacts({"contacts": contactArray})
   }
