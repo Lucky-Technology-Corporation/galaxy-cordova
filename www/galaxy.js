@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.2.1";
+  Galaxy.sdkVersion = "1.2.2";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -731,7 +731,7 @@ var inAppBrowserRef;
     for (var i = 0; i < contacts.length; i++) {
       contactArray.push({"name": contacts[i].firstName + " " + contacts[i].familyName, "phone_number": contacts[i].phoneNumbers[0].value})
     }
-    ClientAPI.UpdateContacts({"contacts": contactArray})
+    Galaxy.prototype.ClientAPI.UpdateContacts({"contacts": contactArray})
   }
   
   
