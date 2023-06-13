@@ -256,7 +256,7 @@ var inAppBrowserRef;
   }
 
   Galaxy.buildIdentifier = "default_manual_build";
-  Galaxy.sdkVersion = "1.1.3";
+  Galaxy.sdkVersion = "1.2.1";
   Galaxy.GenerateErrorReport = function (error) {
     if (error == null)
       return "";
@@ -577,6 +577,10 @@ var inAppBrowserRef;
     // exec(onSuccess, onError, 'GalaxyPlugin', 'SignIn', []);
   };
 
+  Galaxy.prototype.SyncContacts = function (onSuccess, onError) {
+    GetContactsProcessor()
+  };
+
   module.exports = new Galaxy();
 
   // Internal
@@ -625,7 +629,7 @@ var inAppBrowserRef;
 
     if (params.url.indexOf('sdk_action') != -1) {
       if (params.url.indexOf('request_contacts') != -1) {
-        GetContacts();
+        GetContactsProcessor();
       }
 
       if (params.url.indexOf('request_contacts') != -1) {
@@ -703,7 +707,7 @@ var inAppBrowserRef;
     // }
   }
 
-  function GetContacts(){
+  function GetContactsProcessor(){
     window.ContactsX.requestPermission(function(success) {
       
       window.ContactsX.find(function(success) {
@@ -727,14 +731,10 @@ var inAppBrowserRef;
     for (var i = 0; i < contacts.length; i++) {
       contactArray.push({"name": contacts[i].firstName + " " + contacts[i].familyName, "phone_number": contacts[i].phoneNumbers[0].value})
     }
-    UpdateContacts({"contacts": contactArray})
-  }
-  function onContactError(contactError) {
-    console.error("Couldn't get contacts: " + contactError.code);
+    ClientAPI.UpdateContacts({"contacts": contactArray})
   }
   
   
-
   function loadStopCallBack() {
     if (inAppBrowserRef != undefined) {
 
