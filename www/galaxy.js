@@ -313,7 +313,11 @@ var inAppBrowserRef;
     },
 
     GetLeaderboard: function (request, callback, customData, extraHeaders) {
-      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id, request, null, "GET", callback, customData, extraHeaders);
+      var queryString = ""
+      if(request.level_id != undefined && request.level_id != null){
+        queryString = "?sub_section=" + request.level_id;
+      }
+      return Galaxy._internalSettings.ExecuteRequestWrapper("/client/leaderboards/" + request.leaderboard_id + queryString, request, null, "GET", callback, customData, extraHeaders);
     },
 
     GetPlayerFriends: function (request, callback, customData, extraHeaders) {
